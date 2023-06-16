@@ -2,12 +2,20 @@
   <div class="w-full flex px-6 py-4">
     <router-link to="/" class="text-white pt-3">
       <ChevronDown
+        data-aos="fade-right"
+        data-aos-delay="50"
+        data-aos-duration="100"
+        data-aos-easing="ease-in"
         fillColor="#ffffff"
         class="hover:scale-1500 hover:font-bold hover:transition-all"
         :size="20"
       />
     </router-link>
     <h1
+      data-aos="zoom-in"
+      data-aos-delay="100"
+      data-aos-duration="400"
+      data-aos-easing="ease-in-out"
       class="text-white m-auto pl-7 font-semibold cursor-pointer text-xl md:text-2xl lg:text-4xl md:hidden"
     >
       Now Playing
@@ -24,12 +32,21 @@
           <div class="flex flex-col pt-2 pb-1 md:flex-row md:w-[100%]">
             <div class="flex-shrink-0 mb-2 md:flex md:left-0">
               <img
+                data-aos="flip-left"
+                data-aos-delay="50"
+                data-aos-duration="400"
+                data-aos-easing="ease-in"
                 :src="currentTrack.image"
                 class="w-[90%] m-auto h-64 md:w-36 md:h-36 lg:w-40 lg:h-40 object-cover rounded-2xl shadow-xl"
                 :alt="currentTrack.title"
               />
             </div>
-            <div class="flex flex-col mt-5 flex-1 min-w-0 pl-4 md:pl-5">
+            <div
+              data-aos="zoom-in-up"
+              data-aos-delay="90"
+              data-aos-duration="400"
+              class="flex flex-col mt-5 flex-1 min-w-0 pl-4 md:pl-5"
+            >
               <h1
                 class="font-bold text-2xl md:text-3xl lg:text-4xl text-white truncate capitalize"
               >
@@ -91,6 +108,9 @@
               class="w-full px-3 md:w-[50%] flex items-center justify-between mb-2"
             >
               <div
+                data-aos="fade-right"
+                data-aos-delay="200"
+                data-aos-duration="400"
                 class="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center"
               >
                 <router-link to="/lirik">
@@ -98,6 +118,9 @@
                 </router-link>
               </div>
               <div
+                data-aos="fade-left"
+                data-aos-delay="200"
+                data-aos-duration="400"
                 class="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center"
               >
                 <Heart
@@ -126,6 +149,10 @@
               class="w-[100%] h-96 max-w-md lg:max-w-2xl p-4 overflow-y-scroll no-scrollbar scroll-smooth border border-gray-800 rounded-3xl shadow-lg bg-gray-900"
             >
               <div
+                data-aos="fade-left"
+                data-aos-delay="500"
+                data-aos-duration="300"
+                data-aos-easing="ease-in-out"
                 class="flex lg:text-3xl items-center justify-center mb-2 text-white font-semibold"
               >
                 <Music fillColor="#ffffff" :size="25" />
@@ -133,6 +160,10 @@
               </div>
 
               <p
+                data-aos="fade-left"
+                data-aos-delay="700"
+                data-aos-duration="400"
+                data-aos-easing="ease-in"
                 class="text-white text-base text-center lg:text-2xl p-1 mt-3 font-semibold whitespace-pre-line"
               >
                 {{ currentTrack.lyrics.join("\n") }}
@@ -144,13 +175,21 @@
             <div
               class="flex flex-col items-start justify-start p-4 mt-2 w-[95%] md:[60%] h-32 bg-gray-900 rounded-3xl mx-auto text-gray-300"
             >
-              <div class="flex w-full items-center justify-between">
+              <div
+                data-aos="zoom-in"
+                data-aos-delay="200"
+                data-aos-duration="300"
+                class="flex w-full items-center justify-between"
+              >
                 <h4 class="uppercase">Up Next</h4>
                 <span class="right-0">
                   <PlaylistMusicOutline fillColor="#d1d5db" :size="20" />
                 </span>
               </div>
               <div
+                data-aos="zoom-out"
+                data-aos-delay="250"
+                data-aos-duration="300"
                 class="flex w-full items-center justify-between"
                 v-for="track in upcomingTracks"
                 :key="track.id"
@@ -297,7 +336,7 @@
 
 <script setup>
 import { ref, watch, onMounted, computed } from "vue";
-
+import AOS from "aos";
 import Heart from "vue-material-design-icons/Heart.vue";
 import PlaylistMusicOutline from "vue-material-design-icons/PlaylistMusicOutline.vue";
 import Play from "vue-material-design-icons/Play.vue";
@@ -351,6 +390,7 @@ function calculateDuration(duration) {
 }
 
 const upcomingTracks = computed(() => {
+  AOS.init();
   const currentTrackIndex = musics.value.findIndex(
     (song) => song.id === currentTrack.value?.id
   );
@@ -395,6 +435,15 @@ onMounted(() => {
     () => {
       timeupdate();
       loadmetadata();
+    }
+  );
+
+  watch(
+    () => isTrackTimeCurrent.value,
+    (time) => {
+      if (time && time == isTrackTimeTotal.value) {
+        useSong.nextSong(currentTrack.value);
+      }
     }
   );
 

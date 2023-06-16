@@ -1,9 +1,20 @@
 <template>
   <div class="w-full flex px-3 py-4">
     <router-link to="/" class="text- pt-3">
-      <ChevronDown fillColor="#ffffff" :size="20" />
+      <ChevronDown
+        data-aos="fade-right"
+        data-aos-delay="50"
+        data-aos-duration="100"
+        data-aos-easing="ease-in"
+        fillColor="#ffffff"
+        :size="20"
+      />
     </router-link>
     <h1
+      data-aos="zoom-in"
+      data-aos-delay="100"
+      data-aos-duration="400"
+      data-aos-easing="ease-in-out"
       class="text-white m-auto pl-9 font-semibold cursor-pointer text-xl md:text-2xl lg:text-4xl"
     >
       <div class="md:hidden">Now Playing</div>
@@ -18,12 +29,21 @@
         <div class="flex flex-row">
           <div class="flex-shrink-0">
             <img
+              data-aos="flip-left"
+              data-aos-delay="50"
+              data-aos-duration="400"
+              data-aos-easing="ease-in"
               :src="currentTrack.image"
               class="w-28 h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 object-cover rounded-2xl shadow-xl"
               :alt="currentTrack.title"
             />
           </div>
-          <div class="flex flex-col flex-1 min-w-0 pl-4 md:pl-5">
+          <div
+            data-aos="zoom-in-up"
+            data-aos-delay="90"
+            data-aos-duration="400"
+            class="flex flex-col flex-1 min-w-0 pl-4 md:pl-5"
+          >
             <h1
               class="font-bold text-2xl md:text-3xl lg:text-4xl text-white capitalize"
             >
@@ -38,6 +58,9 @@
 
       <div class="w-full flex items-end justify-end md:hidden">
         <div
+          data-aos="fade-left"
+          data-aos-delay="90"
+          data-aos-duration="400"
           class="flex w-10 h-10 md:w-14 md:h-14 mb-1 items-center justify-center text-white font-extrabold cursor-pointer bg-gray-900 rounded-full"
         >
           <router-link to="/detail">
@@ -49,6 +72,10 @@
         class="w-full h-96 max-w-md lg:max-w-xl p-4 overflow-y-scroll border border-gray-800 rounded-3xl shadow-lg bg-gray-900 md:mx-auto md:hidden"
       >
         <div
+          data-aos="fade-left"
+          data-aos-delay="300"
+          data-aos-duration="300"
+          data-aos-easing="ease-in-out"
           class="flex items-center justify-center mb-2 text-white font-semibold"
         >
           <Music fillColor="#ffffff" :size="20" />
@@ -56,6 +83,10 @@
         </div>
 
         <p
+          data-aos="fade-left"
+          data-aos-delay="400"
+          data-aos-duration="400"
+          data-aos-easing="ease-in"
           class="text-white text-lg text-center font-semibold whitespace-pre-line"
         >
           {{ formatLyrics(currentTrack.lyrics) }}

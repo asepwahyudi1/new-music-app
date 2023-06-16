@@ -10,7 +10,6 @@ export const useSongStore = defineStore("song", {
     currentTrack: null,
     playlist: {},
     musicList: {},
-    repeat: false,
     isRepeatActive: false,
   }),
   actions: {
@@ -49,10 +48,6 @@ export const useSongStore = defineStore("song", {
     getPlaylist() {
       return this.playlist;
     },
-
-    // getMusicById(musicId) {
-    //   return this.musicList.find((music) => music.id === musicId);
-    // },
 
     async loadSong(artist, track) {
       try {
@@ -172,33 +167,47 @@ export const useSongStore = defineStore("song", {
       }
     },
 
-    repeatSong(currentTrack) {
-      if (!Array.isArray(this.musics)) {
-        console.error("Invalid musics data");
-        return;
-      }
+    // repeatSong() {
+    //   if (this.audio) {
+    //     this.isRepeatActive = !this.isRepeatActive;
+    //     this.audio.removeEventListener("ended", this.handleSongEnd);
+    //     if (this.isRepeatActive) {
+    //       this.audio.addEventListener("ended", this.handleSongEnd);
+    //     }
+    //   }
+    //   console.log("repeatSong() function called");
+    //   console.log("isRepeatActive:", this.isRepeatActive);
+    //   console.log("audio:", this.audio);
+    // },
 
-      const currentIndex = this.musics.findIndex(
-        (song) => song.id === currentTrack?.id
-      );
-      if (currentIndex !== -1) {
-        const song = this.musics[currentIndex];
-        this.loadSong(this.currentArtist, song);
-        this.setCurrentTrack(song);
+    // handleSongEnd() {
+    //   if (this.isRepeatActive) {
+    //     this.audio.currentTime = 0;
+    //     this.audio.play();
+    //   } else {
+    //     this.resetState();
+    //   }
+    // },
 
-        this.audio.removeEventListener("ended", this.handleRepeat);
+    // repeatSong() {
+    //   this.isRepeatActive = !this.isRepeatActive;
+    //   console.log("repeatSong() function called");
+    //   console.log("isRepeatActive:", this.isRepeatActive);
+    //   console.log("audio:", this.audio);
+    // },
 
-        const handleRepeat = () => {
-          this.audio.currentTime = 0;
-          this.audio.play();
-        };
-        this.audio.addEventListener("ended", handleRepeat);
-        this.handleRepeat = handleRepeat;
-
-        this.isRepeatActive = !this.isRepeatActive;
-        this.repeat = this.isRepeatActive; // Mengatur nilai repeat sesuai dengan isRepeatActive
-      }
-    },
+    // handleSongEnd() {
+    //   if (this.isRepeatActive) {
+    //     this.audio.currentTime = 0;
+    //     this.audio.play();
+    //   } else {
+    //     // Hentikan pemutaran audio yang sebelumnya (jika ada)
+    //     if (this.audio && typeof this.audio.pause === "function") {
+    //       this.audio.pause();
+    //     }
+    //     this.resetState();
+    //   }
+    // },
 
     playFromFirst() {
       this.resetState();

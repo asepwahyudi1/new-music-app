@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import axios from "axios";
+import "aos/dist/aos.css";
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);

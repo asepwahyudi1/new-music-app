@@ -3,6 +3,11 @@
     <div class="container px-3 md:mx-auto">
       <div class="flex items-center justify-between my-1">
         <h1
+          data-aos="fade-right"
+          data-aos-offset="150"
+          data-aos-delay="50"
+          data-aos-duration="300"
+          data-aos-easing="ease-in-out"
           class="ml-[40%] text-white py-4 text-center font-semibold cursor-pointer md:hidden text-xl md:text-2xl lg:text-4xl"
         >
           Songs
@@ -23,7 +28,15 @@
             :key="track.id"
             class="w-full max-w-md md:w-32 md:h-48 lg:w-48 lg:h-64 p-3 md:p-4 md:border md:border-gray-800 md:rounded-3xl md:shadow-lg md:bg-gray-900 md:mt-1"
           >
-            <SongRow :track="track" :artist="track.artist" />
+            <SongRow
+              data-aos="fade-down"
+              data-aos-offset="150"
+              data-aos-delay="50"
+              data-aos-duration="400"
+              data-aos-easing="ease-in-out"
+              :track="track"
+              :artist="track.artist"
+            />
           </div>
         </div>
 
@@ -33,10 +46,23 @@
             :key="playlist.name"
             class="text-white font-bold text-xl hidden md:block md:my-4 md:text-2xl mb-1 capitalize"
           >
-            <h1>{{ playlist.name }}</h1>
+            <h1
+              data-aos="fade-right"
+              data-aos-offset="200"
+              data-aos-delay="50"
+              data-aos-duration="300"
+              data-aos-easing="ease-in-out"
+            >
+              {{ playlist.name }}
+            </h1>
 
             <div class="flex gap-3">
               <div
+                data-aos="flip-down"
+                data-aos-offset="200"
+                data-aos-delay="100"
+                data-aos-duration="400"
+                data-aos-easing="ease-in-out"
                 v-for="musicId in playlist.ids"
                 :key="musicId"
                 class="hidden md:block w-full max-w-md md:w-32 md:h-48 lg:w-48 lg:h-64 p-3 md:p-4 md:border md:border-gray-800 md:rounded-3xl md:shadow-lg md:bg-gray-900 md:mt-1"
@@ -60,6 +86,7 @@ import { ref, onMounted } from "vue";
 import SongRow from "../components/SongRow.vue";
 import MusicPlayer from "../components/MusicPlayer.vue";
 import ModalUsers from "../components/ModalUsers.vue";
+import AOS from "aos";
 
 import { useSongStore } from "../stores/song";
 import { storeToRefs } from "pinia";
@@ -76,6 +103,7 @@ const getArtistById = (artistId) => {
 };
 
 onMounted(async () => {
+  AOS.init();
   isPlaying.value = false;
   useSong.fetchMusics();
 

@@ -2,7 +2,7 @@
   <div
     id="MusicPlayer"
     v-if="audio"
-    class="fixed flex items-center justify-between bottom-0 w-full z-50 h-[90px] bg-polos shadow-xl rounded-xl bg-opacity-30 backdrop-blur-md border border-slate-900"
+    class="fixed flex items-center justify-between bottom-0 w-full z-50 h-[90px] bg-polos shadow-xl rounded-xl bg-opacity-30 backdrop-blur-sm border border-slate-900"
   >
     <div class="flex items-center w-1/4">
       <router-link to="/detail">
@@ -74,7 +74,7 @@
           </div>
 
           <div class="hidden md:block">
-            <button class="mx-2" @click="useSong.repeatSong(currentTrack)">
+            <button class="mx-2" @click="toggleRepeat">
               <Repeat v-if="!isRepeatActive" fillColor="#ffffff" :size="25" />
               <RepeatOnce v-else fillColor="#ffffff" :size="25" />
             </button>
@@ -144,14 +144,8 @@ import Shuffle from "vue-material-design-icons/Shuffle.vue";
 import { useSongStore } from "../stores/song";
 import { storeToRefs } from "pinia";
 const useSong = useSongStore();
-const {
-  isPlaying,
-  isRepeatActive,
-  audio,
-  currentTrack,
-  currentArtist,
-  musics,
-} = storeToRefs(useSong);
+const { isPlaying, audio, currentTrack, currentArtist, musics } =
+  storeToRefs(useSong);
 
 let isHover = ref(false);
 let isTrackTimeCurrent = ref(null);
@@ -160,6 +154,7 @@ let seeker = ref(null);
 let seekerContainer = ref(null);
 let range = ref(0);
 const isShuffled = ref(false);
+const isRepeatActive = ref(false);
 
 onMounted(() => {
   const loadmetadata = () => {
@@ -170,6 +165,7 @@ onMounted(() => {
       isTrackTimeTotal.value =
         minutes + ":" + seconds.toString().padStart(2, "0");
     });
+    // audio.value.addEventListener("ended", repeatSong);
   };
 
   const timeupdate = () => {
@@ -241,6 +237,28 @@ onMounted(() => {
     });
   }
 });
+
+const repeatSong = () => {
+  console.log("Repeat song function called");
+  if (isRepeatActive.value) {
+    // Check if the audio is at the end
+    if (audio.value.currentTime === audio.value.duration) {
+      // Set the current time back to 0
+      audio.value.currentTime = 0;
+      // Play the audio again
+      audio.value.play();
+    }
+  }
+};
+
+const toggleRepeat = () => {
+  isRepeatActive.value = !isRepeatActive.value;
+  if (isRepeatActive.value) {
+    audio.value.addEventListener("ended", repeatSong);
+  } else {
+    audio.value.removeEventListener("ended", repeatSong);
+  }
+};
 
 function shuffle(array) {
   let currentIndex = array.length;

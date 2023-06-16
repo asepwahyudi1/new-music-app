@@ -1,9 +1,23 @@
 <template>
   <div>
-    <div class="w-9 h-9 mt-2 rounded-full md:hidden" @click="open = true">
+    <div
+      data-aos="fade-left"
+      data-aos-delay="150"
+      data-aos-duration="600"
+      data-aos-easing="ease-in-out"
+      class="w-9 h-9 mt-2 rounded-full md:hidden"
+      @click="open = true"
+    >
       <AccountCircleOutline fillColor="#ffffff" :size="30" />
     </div>
-    <div class="w-9 h-9 mt-1 rounded-full hidden md:block" @click="open = true">
+    <div
+      data-aos="fade-left"
+      data-aos-delay="150"
+      data-aos-duration="600"
+      data-aos-easing="ease-in-out"
+      class="w-9 h-9 mt-1 rounded-full hidden md:block"
+      @click="open = true"
+    >
       <AccountCircleOutline fillColor="#ffffff" :size="40" />
     </div>
 
@@ -15,6 +29,11 @@
         >
           <div class="flex items-end justify-end pt-1 pr-1">
             <Close
+              data-aos="fade-up-left"
+              data-aos-anchor-placement="top-bottom"
+              data-aos-delay="50"
+              data-aos-duration="500"
+              data-aos-easing="ease-in-out"
               @click="handleClose"
               fillColor="#ffffff"
               class="hover:scale-125 hover:font-bold hover:transition-all"
@@ -24,6 +43,11 @@
           <div class="flex flex-wrap items-center justify-center">
             <div class="flex flex-wrap items-end justify-center w-full mb-1">
               <div
+                data-aos="fade-up"
+                data-aos-anchor-placement="top-bottom"
+                data-aos-delay="50"
+                data-aos-duration="500"
+                data-aos-easing="ease-in-out"
                 class="w-20 h-20 md:w-[90px] md:h-[90px] xl:w-[100px] xl:h-[100px] rounded-full bg-[#FF8080]"
               >
                 <h1
@@ -35,7 +59,14 @@
             </div>
 
             <div class="flex items-center justify-center w-full mb-6">
-              <h1 class="text-xl font-bold md:text-2xl">
+              <h1
+                data-aos="flip-up"
+                data-aos-anchor-placement="top-bottom"
+                data-aos-delay="200"
+                data-aos-duration="500"
+                data-aos-easing="ease-in-out"
+                class="text-xl font-bold md:text-2xl"
+              >
                 {{ user ? user.name : "Remedy" }}
               </h1>
             </div>
@@ -43,17 +74,41 @@
             <div
               class="grid grid-cols-3 gap-4 w-full px-3 text-slate-400 text-center"
             >
-              <div>
+              <div
+                data-aos="fade-up-right"
+                data-aos-anchor-placement="top-bottom"
+                data-aos-delay="250"
+                data-aos-duration="500"
+                data-aos-easing="ease-in-out"
+              >
                 <p>Like</p>
-                <h5 class="text-white font-semibold">{{ user.like }}</h5>
+                <h5 class="text-white font-semibold">
+                  {{ user.like }}
+                </h5>
               </div>
-              <div>
+              <div
+                data-aos="fade-up"
+                data-aos-anchor-placement="top-bottom"
+                data-aos-delay="250"
+                data-aos-duration="500"
+                data-aos-easing="ease-in-out"
+              >
                 <p>Music</p>
-                <h5 class="text-white font-semibold">{{ user.totalMusic }}</h5>
+                <h5 class="text-white font-semibold">
+                  {{ user.totalMusic }}
+                </h5>
               </div>
-              <div>
+              <div
+                data-aos="fade-up-left"
+                data-aos-anchor-placement="top-bottom"
+                data-aos-delay="250"
+                data-aos-duration="500"
+                data-aos-easing="ease-in-out"
+              >
                 <p>UnLike</p>
-                <h5 class="text-white font-semibold">{{ user.unlike }}</h5>
+                <h5 class="text-white font-semibold">
+                  {{ user.unlike }}
+                </h5>
               </div>
             </div>
           </div>
@@ -68,6 +123,7 @@ import { ref, defineEmits, onMounted } from "vue";
 import axios from "axios";
 import Close from "vue-material-design-icons/Close.vue";
 import AccountCircleOutline from "vue-material-design-icons/AccountCircleOutline.vue";
+import AOS from "aos";
 
 const open = ref(false);
 const user = ref(null);
@@ -82,6 +138,10 @@ const getUser = async () => {
 };
 
 onMounted(getUser);
+
+onMounted(() => {
+  AOS.init();
+});
 
 const emits = defineEmits(["close"]);
 
